@@ -1,0 +1,2 @@
+# ruby-blog
+Blog application
