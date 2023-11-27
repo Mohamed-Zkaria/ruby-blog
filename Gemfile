@@ -70,3 +70,7 @@ end
 gem "pg"
 
 gem 'jwt'
+
+gem 'sidekiq'
+
+gem 'redis'
