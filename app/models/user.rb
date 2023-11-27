@@ -6,4 +6,7 @@ class User < ApplicationRecord
     validates :image, presence: true # image will be uploaded to a storage hosting service. for now will mock it as string only.
 
     has_secure_password
+
+    has_many :posts
+    has_many :comments
 end
