@@ -6,10 +6,13 @@ class ApplicationController < ActionController::API
 
     def authorize_request
         header = request.headers['Authorization']
+        puts "=" * 100
+        puts header
+        puts "=" * 100
         header = header.split(' ').last if header
         begin
           @decoded = Jsonwebtoken.decode(header)
-          render json:{ errors:"invalid token" }, status: :unauthorized if Jsonwebtoken.valid_token?(@decoded[:expiry_time])
+          render json:{ errors:"invalid token" }, status: :unauthorized unless Jsonwebtoken.valid_token?(@decoded[:expiry_time])
           @current_user = User.find(@decoded[:user_id])
         rescue ActiveRecord::RecordNotFound => e
           render json: { errors: e.message }, status: :unauthorized

@@ -11,6 +11,10 @@ Rails.application.routes.draw do
   post "/auth/login", to: "authentication#login", as: :login_users
 
   mount Sidekiq::Web => "/sidekiq"
+  
+  get "/posts", to: "posts#index", as: :get_posts
+  post "/posts", to: "posts#create", as: :create_posts
+
   # Defines the root path route ("/")
   # root "posts#index"
 end
