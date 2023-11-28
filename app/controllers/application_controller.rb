@@ -23,4 +23,13 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def owns_comment?
+    begin
+      @comment = Comment.find(params[:comment_id]) 
+      render json: {errors: "Unauthorized"}, status: :unauthorized unless @comment.user_id == @current_user.id
+    rescue ActiveRecord::RecordNotFound => e
+      render json: { errors: e.message }, status: :not_found
+    end
+  end
+
 end

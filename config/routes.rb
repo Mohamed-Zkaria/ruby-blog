@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   delete "/posts/:id", to:"posts#destroy", as: :delete_post
 
   post "/comments/:post_id/post", to: "comments#create", as: :create_comment
+  put "/comments/:comment_id", to: "comments#update", as: :update_comment
+  delete "/comments/:comment_id", to: "comments#destroy", as: :delete_comment
 
   # Defines the root path route ("/")
   # root "posts#index"
