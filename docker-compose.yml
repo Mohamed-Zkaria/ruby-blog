@@ -21,7 +21,7 @@ services:
       - 'redis'
     build: .
     env_file: .env
-    command: bash -c "bundle exec sidekiq"
+    command: bash -c "bundle update && bundle install && bundle exec sidekiq"
 
   web:
     build: .
