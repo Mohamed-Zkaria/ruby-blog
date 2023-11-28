@@ -8,8 +8,9 @@ class PostsController < ApplicationController
     end
 
     def create
-        @post = Post.new(post_params)
+        @post = Post.new(post_params.except(:tags))
         @post.user_id = @current_user.id
+        create_or_delete_post_tags(@post, params[:tags])
         if @post.save
             render json: @post.attributes.except("user_id"), status: :created
         else
@@ -21,6 +22,7 @@ class PostsController < ApplicationController
     def update
         @post.title = params[:title] if params[:title]
         @post.body = params[:body] if params[:body]
+        create_or_delete_post_tags(@post, params[:tags])
         if @post.save
             render json: @post.attributes.except("user_id"), status: :created
         else
@@ -41,7 +43,15 @@ class PostsController < ApplicationController
     private
     def post_params
         params.permit(
-          :title, :body
+          :title, :body, :tags
         )
+    end
+
+    def create_or_delete_post_tags(post, tags)
+        post.post_tag.destroy_all
+        tags = tags.strip.split(",")
+        tags.each do |tag|
+            post.tags << Tag.find_or_create_by(name: tag)
+        end    
     end
 end

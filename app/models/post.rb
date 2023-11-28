@@ -8,6 +8,9 @@ class Post < ApplicationRecord
     has_many :comments, dependent: :destroy
     after_create :delete_after_time
 
+    has_many :post_tag, dependent: :destroy
+    has_many :tags, through: :post_tag
+
     private
 
     def delete_after_time
