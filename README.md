@@ -1,24 +1,16 @@
-# README
+# ruby_blog
+Simple Ruby api to handle four different entities. 
+- user
+- posts
+- comments
+- tags
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+And a job the deletes posts after 24 hours.
 
-Things you may want to cover:
+## How to install
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+To install you need docker and docker composer to be installed on your machine. 
+And you need to create and .env file with the variables like `.env.erb`:
+```
+docker compose up --build
+```
