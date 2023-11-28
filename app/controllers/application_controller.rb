@@ -1,9 +1,5 @@
 class ApplicationController < ActionController::API
 
-  def not_found
-    render :json => {message: 'Not Found'}, :status => '404'
-  end
-
   def authorize_request
     header = request.headers['Authorization']
     header = header.split(' ').last if header
@@ -12,7 +8,7 @@ class ApplicationController < ActionController::API
       render json:{ errors:"invalid token" }, status: :unauthorized unless Jsonwebtoken.valid_token?(@decoded[:expiry_time])
       @current_user = User.find(@decoded[:user_id])
     rescue ActiveRecord::RecordNotFound => e
-      render json: { errors: e.message }, status: :unauthorized
+      render json: { errors: e.message }, status: :not_found
     rescue JWT::DecodeError => e
       render json: { errors: e.message }, status: :unauthorized
     end
@@ -23,9 +19,8 @@ class ApplicationController < ActionController::API
       @post = Post.find(params[:id]) 
       render json: {errors: "Unauthorized"}, status: :unauthorized unless @post.user_id == @current_user.id
     rescue ActiveRecord::RecordNotFound => e
-      render json: { errors: e.message }, status: :unauthorized
+      render json: { errors: e.message }, status: :not_found
     end
-
   end
 
 end
