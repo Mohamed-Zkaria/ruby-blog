@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   
   get "/posts", to: "posts#index", as: :get_posts
   post "/posts", to: "posts#create", as: :create_posts
+  put "/posts/:id/edit", to: "posts#update", as: :edit_posts
+  delete "/posts/:id", to:"posts#destroy"
 
   # Defines the root path route ("/")
   # root "posts#index"
